@@ -16,20 +16,25 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
-
+  final questions = const [
+    {
+      'questionText': "What is your favourite animal?",
+      'answers': ['Bear', 'Racoon', 'Goblin', 'Yak']
+    },
+    {
+      'questionText': "What is your favourite color?",
+      'answers': ['Black', 'Red', 'Green', 'Blue']
+    },
+    {
+      'questionText': "What is your favourite food?",
+      'answers': ['Black', 'Red', 'Green', 'Yellow']
+    },
+  ];
   void _answerQuestion() {
     setState(() {
       _questionIndex = (_questionIndex + 1) % questions.length;
     });
-
-    print('Answer chosen!');
   }
-
-  List<String> questions = [
-    "What is your favourite animal?",
-    "What is your favourite color?",
-    "What is your favourite food?"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +47,11 @@ class _MyAppState extends State<MyApp> {
           ),
           body: Column(
             children: <Widget>[
-              Question(questions[_questionIndex]),
-              Answer(_answerQuestion),
-              Answer(_answerQuestion),
-              Answer(_answerQuestion),
+              Question(questions[_questionIndex]['questionText'] as String),
+              ...(questions[_questionIndex]['answers'] as List<String>)
+                  .map((answer) {
+                return Answer(_answerQuestion, answer);
+              }).toList()
             ],
           )),
     );
