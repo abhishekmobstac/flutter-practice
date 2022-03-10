@@ -32,8 +32,13 @@ class _MyAppState extends State<MyApp> {
   ];
   void _answerQuestion() {
     setState(() {
-      _questionIndex = (_questionIndex + 1) ;
+      _questionIndex = (_questionIndex + 1);
     });
+    if (_questionIndex < questions.length) {
+      print('We have more questions!');
+    } else {
+      print('No more questions!');
+    }
   }
 
   @override
@@ -45,15 +50,18 @@ class _MyAppState extends State<MyApp> {
           appBar: AppBar(
             title: const Text("Quiz app"),
           ),
-          body: Column(
-            children: <Widget>[
-              Question(questions[_questionIndex]['questionText'] as String),
-              ...(questions[_questionIndex]['answers'] as List<String>)
-                  .map((answer) {
-                return Answer(_answerQuestion, answer);
-              }).toList()
-            ],
-          )),
+          body: _questionIndex < questions.length
+              ? Column(
+                  children: <Widget>[
+                    Question(
+                        questions[_questionIndex]['questionText'] as String),
+                    ...(questions[_questionIndex]['answers'] as List<String>)
+                        .map((answer) {
+                      return Answer(_answerQuestion, answer);
+                    }).toList()
+                  ],
+                )
+              : Text("You did it")),
     );
   }
 }
