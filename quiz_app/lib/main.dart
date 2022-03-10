@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   ];
   void _answerQuestion() {
     setState(() {
-      _questionIndex = (_questionIndex + 1) % questions.length;
+      _questionIndex = (_questionIndex + 1) ;
     });
   }
 
